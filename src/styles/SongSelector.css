@@ -1,0 +1,517 @@
+.song-selector-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Header bar like in DDR */
+.header-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: #1b4700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  color: #a3e600;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #a3e600;
+  z-index: 30; /* Increased to be above carousel items */
+}
+
+.header-title {
+  font-weight: bold;
+}
+
+.header-counter {
+  background-color: #333;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 1.2rem;
+}
+
+/* Ensure song info displays above the stretched trapezoids */
+.song-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  z-index: 40; /* Higher z-index to appear above menu items */
+  position: absolute;
+  left: 30%;
+  right: 400px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.8); /* Enhanced shadow for better visibility */
+}
+
+/* Add gradient overlay to ensure text is readable over extended trapezoids */
+.song-info::before {
+  content: "";
+  position: absolute;
+  left: -50%;
+  top: -100%;
+  width: 200%;
+  height: 300%;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.song-info h2 {
+  font-size: 5rem;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+  letter-spacing: 2px;
+}
+
+.song-info p {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+}
+
+/* DDR-style grid background */
+.ddr-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(50, 100, 50, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(50, 100, 50, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  z-index: 1;
+}
+
+/* Carousel container */
+.carousel-container {
+  width: 400px; /* Width for the controls area */
+  height: calc(100vh - 60px); /* Full height minus header */
+  position: absolute;
+  right: 0;
+  top: 60px; /* Start below header */
+  display: flex;
+  align-items: center; /* Center alignment to match selection marker */
+  justify-content: center;
+  z-index: 20;
+  overflow: visible; /* Allow items to extend outside container */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 1200px) {
+  .song-info {
+    left: 25%;
+  }
+}
+
+@media (max-width: 768px) {
+  .song-info {
+    left: 0;
+    right: 300px;
+    top: 45%;
+  }
+  
+  .song-info h2 {
+    font-size: 3.5rem;
+  }
+  
+  .carousel-container {
+    width: 300px;
+  }
+  
+  .song-selector-container::after {
+    left: 0;
+    right: 300px;
+    bottom: 15px;
+  }
+}
+
+/* Carousel viewport - this contains all the items */
+.carousel-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Selection marker shape matches carousel items */
+.selection-marker {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  height: 94px; /* Slightly larger than item height */
+  top: 50%; /* Center in the container */
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.07);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0;
+  z-index: 21;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+  /* Match trapezoid shape of items with 45 degree angle */
+  clip-path: polygon(90px 0, 100vw 0, 100vw 100%, 0 100%);
+  animation: markerPulse 2s infinite ease-in-out;
+  width: 100vw; /* Extend to right edge of window */
+  max-width: unset;
+  right: -100vw; /* Stretch to the right edge of window */
+}
+
+@keyframes markerPulse {
+  0% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Individual carousel items */
+.carousel-item {
+  width: calc(100vw - 20px); /* Full viewport width minus left margin */
+  height: 90px;
+  margin: 20px 0; /* Spacing between items */
+  display: flex;
+  align-items: center;
+  padding: 0 30px 0 75px; /* Increased left padding for angled shape */
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute; /* Position absolutely */
+  left: 20px; /* Match the selection marker left margin */
+  transform-origin: left center;
+  font-size: 1.1rem;
+  border: none;
+  /* Create trapezoid shape with 45 degree angle on left */
+  clip-path: polygon(90px 0, 100vw 0, 100vw 100%, 0 100%);
+  /* Add solid background with high opacity */
+  background-color: rgba(var(--item-color-rgb), 0.85) !important;
+  /* Add shiny border effect */
+  box-shadow: 
+    inset 0 0 10px rgba(255, 255, 255, 0.3),
+    0 5px 10px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+  transition: all 0.2s ease;
+}
+
+.carousel-item.selected {
+  transform: translateY(0) scale(1) !important; /* Always keep selected item at 0 offset */
+  z-index: 25;
+  /* Add highlight border effect for selected item */
+  box-shadow: 
+    inset 0 0 15px rgba(255, 255, 255, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.4);
+  /* Enhanced trapezoid for selected item with 45 degree angle */
+  clip-path: polygon(80px 0, 100vw 0, 100vw 100%, 0 100%);
+  background-color: rgba(var(--item-color-rgb), 0.95) !important;
+}
+
+.carousel-item:not(.selected):hover {
+  /* No hover effect */
+}
+
+.arrow-indicator {
+  font-size: 1.8rem; /* Increased size */
+  margin-right: 20px;
+  width: 25px;
+  display: inline-block;
+  margin-left: 5px; /* Adjust for trapezoid shape */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+  position: relative;
+  z-index: 2;
+}
+
+.carousel-item.selected .arrow-indicator {
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+.item-name {
+  font-size: 1.5rem; /* Increased font size */
+  letter-spacing: 1px;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 2;
+  font-weight: bold;
+  color: white;
+}
+
+/* DDR-inspired arrow indicators at bottom */
+.song-selector-container::after {
+  content: "↑ ↓";
+  position: absolute;
+  bottom: 20px;
+  left: 30%;
+  right: 400px;
+  text-align: center;
+  font-size: 2rem;
+  color: white;
+}
+
+/* Page Transition Animation */
+.page-transition {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: growTransition 1s forwards;
+  transform-origin: center;
+  overflow: hidden;
+}
+
+.transition-text {
+  color: white;
+  font-size: 0;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  animation: growText 1s forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes growTransition {
+  0% {
+    transform: translate(-50%, -50%) scale(0.1);
+    border-radius: 10px;
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(5);
+    border-radius: 10px;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(20);
+    border-radius: 0;
+  }
+}
+
+@keyframes growText {
+  0% {
+    font-size: 0;
+    opacity: 0;
+  }
+  100% {
+    font-size: 3rem;
+    opacity: 1;
+  }
+}
+
+/* Hide all content except transition during transition */
+.song-selector-container.transitioning .carousel-container,
+.song-selector-container.transitioning .song-info,
+.song-selector-container.transitioning .ddr-grid {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+/* DDR-inspired retro styling */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Press Start 2P', system-ui, sans-serif;
+  background-color: black;
+}
+
+/* Add a darker overlay to the right side of the song-selector container */
+.song-selector-container::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  width: 400px;
+  background-color: rgba(0, 40, 0, 0.4); /* Reduced opacity */
+  z-index: 15;
+  pointer-events: none;
+}
+
+/* Ensure the trapezoid shapes use the full width */
+@media (min-width: 1200px) {
+  .carousel-item {
+    clip-path: polygon(90px 0, 100vw 0, 100vw 100%, 0 100%);
+  }
+  
+  .carousel-item.selected {
+    clip-path: polygon(80px 0, 100vw 0, 100vw 100%, 0 100%);
+  }
+  
+  .carousel-item:not(.selected):hover {
+    clip-path: polygon(85px 0, 100vw 0, 100vw 100%, 0 100%);
+  }
+}
+
+/* Add neon glow effect for specific menu items */
+.carousel-item[style*="0, 102, 255"] {
+  box-shadow: 
+    inset 0 0 15px rgba(0, 102, 255, 0.5),
+    0 0 10px rgba(0, 102, 255, 0.4),
+    0 0 20px rgba(0, 102, 255, 0.2);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 102, 255, 0.8);
+}
+
+.carousel-item[style*="0, 204, 255"] {
+  box-shadow: 
+    inset 0 0 15px rgba(0, 204, 255, 0.5),
+    0 0 10px rgba(0, 204, 255, 0.4),
+    0 0 20px rgba(0, 204, 255, 0.2);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 204, 255, 0.8);
+}
+
+.carousel-item[style*="57, 255, 20"] {
+  box-shadow: 
+    inset 0 0 15px rgba(57, 255, 20, 0.5),
+    0 0 10px rgba(57, 255, 20, 0.4),
+    0 0 20px rgba(57, 255, 20, 0.2);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8), 0 0 10px rgba(57, 255, 20, 0.8);
+}
+
+.carousel-item[style*="0, 179, 0"] {
+  box-shadow: 
+    inset 0 0 15px rgba(0, 179, 0, 0.5),
+    0 0 10px rgba(0, 179, 0, 0.4),
+    0 0 20px rgba(0, 179, 0, 0.2);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 179, 0, 0.8);
+}
+
+/* Enhanced neon effect for selected items */
+.carousel-item.selected[style*="0, 102, 255"] {
+  box-shadow: 
+    inset 0 0 20px rgba(0, 102, 255, 0.7),
+    0 0 15px rgba(0, 102, 255, 0.6),
+    0 0 30px rgba(0, 102, 255, 0.4);
+}
+
+.carousel-item.selected[style*="0, 204, 255"] {
+  box-shadow: 
+    inset 0 0 20px rgba(0, 204, 255, 0.7),
+    0 0 15px rgba(0, 204, 255, 0.6),
+    0 0 30px rgba(0, 204, 255, 0.4);
+}
+
+.carousel-item.selected[style*="57, 255, 20"] {
+  box-shadow: 
+    inset 0 0 20px rgba(57, 255, 20, 0.7),
+    0 0 15px rgba(57, 255, 20, 0.6),
+    0 0 30px rgba(57, 255, 20, 0.4);
+}
+
+.carousel-item.selected[style*="0, 179, 0"] {
+  box-shadow: 
+    inset 0 0 20px rgba(0, 179, 0, 0.7),
+    0 0 15px rgba(0, 179, 0, 0.6),
+    0 0 30px rgba(0, 179, 0, 0.4);
+}
+
+/* Also adjust the page background colors for these sections */
+.career-page {
+  background-image: linear-gradient(to right, #111, #000, #003399);
+}
+
+.projects-page {
+  background-image: linear-gradient(to right, #111, #000, #0099cc);
+}
+
+.hobbies-page {
+  background-image: linear-gradient(to right, #111, #000, #33cc00);
+}
+
+.blog-page {
+  background-image: linear-gradient(to right, #111, #000, #006600);
+}
+
+/* Update Hobbies neon glow effect (pure bright green) */
+.carousel-item[style*="0, 255, 0"] {
+  box-shadow: 
+    inset 0 0 15px rgba(0, 255, 0, 0.6),
+    0 0 12px rgba(0, 255, 0, 0.5),
+    0 0 25px rgba(0, 255, 0, 0.3);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8), 0 0 12px rgba(0, 255, 0, 0.9);
+  /* Ensure extra brightness */
+  filter: brightness(1.2);
+}
+
+/* Update Blog neon glow effect (darker green) */
+.carousel-item[style*="0, 102, 0"] {
+  box-shadow: 
+    inset 0 0 15px rgba(0, 102, 0, 0.6),
+    0 0 10px rgba(0, 102, 0, 0.5),
+    0 0 20px rgba(0, 102, 0, 0.3);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 102, 0, 0.8);
+}
+
+/* Enhanced neon effect for selected items with new colors */
+.carousel-item.selected[style*="0, 255, 0"] {
+  box-shadow: 
+    inset 0 0 25px rgba(0, 255, 0, 0.8),
+    0 0 20px rgba(0, 255, 0, 0.7),
+    0 0 35px rgba(0, 255, 0, 0.5);
+  filter: brightness(1.3);
+}
+
+.carousel-item.selected[style*="0, 102, 0"] {
+  box-shadow: 
+    inset 0 0 20px rgba(0, 102, 0, 0.8),
+    0 0 15px rgba(0, 102, 0, 0.7),
+    0 0 30px rgba(0, 102, 0, 0.5);
+}
+
+/* Extra large monitors: scale up items and spacing */
+@media (min-height: 1100px) {
+  .carousel-container {
+    width: 480px;
+    right: 60px;
+  }
+  .carousel-item {
+    height: 150px;
+    margin: 35px 0;
+    font-size: 2.2rem;
+    clip-path: polygon(110px 0, 100vw 0, 100vw 100%, 0 100%);
+    padding-left: 90px;
+  }
+  .carousel-item.selected {
+    clip-path: polygon(100px 0, 100vw 0, 100vw 100%, 0 100%);
+    font-size: 2.5rem;
+  }
+  .carousel-item:not(.selected):hover {
+    clip-path: polygon(120px 0, 100vw 0, 100vw 100%, 0 100%);
+  }
+  .selection-marker {
+    height: 154px;
+    left: 40px;
+    right: 40px;
+    clip-path: polygon(100px 0, 100vw 0, 100vw 100%, 0 100%);
+  }
+  .arrow-indicator {
+    font-size: 2.5rem;
+    margin-right: 40px;
+    width: 40px;
+  }
+  .item-name {
+    font-size: 2.2rem;
+  }
+} 

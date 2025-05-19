@@ -1,0 +1,94 @@
+/* Shared styles for all pages */
+.page-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  color: white;
+  background-color: #000;
+  font-family: 'Press Start 2P', system-ui, sans-serif;
+}
+
+.page-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.page-container p {
+  margin-bottom: 2rem;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+/* Back link to main menu */
+.back-link {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #00ff00;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #00ff00;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+.back-link:hover {
+  transform: scale(1.05);
+  background-color: rgba(0, 255, 0, 0.2);
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.6), 0 0 30px rgba(0, 255, 0, 0.4);
+  text-shadow: 0 0 8px rgba(0, 255, 0, 0.9);
+}
+
+/* Specific page backgrounds */
+.about-page {
+  background-image: linear-gradient(to right, #111, #000, #676700);
+}
+
+.career-page {
+  background-image: linear-gradient(to right, #111, #000, #003399);
+}
+
+.projects-page {
+  background-image: linear-gradient(to right, #111, #000, #0099cc);
+}
+
+.tech-stack-page {
+  background-image: linear-gradient(to right, #111, #000, #470147);
+}
+
+.hobbies-page {
+  background-image: linear-gradient(to right, #111, #000, #00cc00);
+}
+
+.blog-page {
+  background-image: linear-gradient(to right, #111, #000, #004400);
+}
+
+.contact-page {
+  background-image: linear-gradient(to right, #111, #000, #8B0000);
+}
+
+/* DDR-style grid background for all pages */
+.page-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(50, 100, 50, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(50, 100, 50, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  z-index: 1;
+  pointer-events: none;
+} 
