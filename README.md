@@ -4,11 +4,7 @@ This is my personal portfolio website, inspired by the retro look and feel of Da
 
 **Live site:** [quintontracey.com](https://quintontracey.com)
 
-## Screenshots
 
-![Home Page](./screenshots/home.jpg)
-![Projects Page](./screenshots/projects.jpg)
-![Hobbies Page](./screenshots/hobbies.jpg)
 
 _If screenshots do not appear, add images to a `screenshots/` folder in the repo root with the above filenames._
 
@@ -19,3 +15,9 @@ _If screenshots do not appear, add images to a `screenshots/` folder in the repo
 - **SVG Icons**
 
 Explore the site to see my projects, skills, hobbies, and more.
+
+## Screenshots
+
+![Home Page](https://github.com/QuintonTracey/personal-website/blob/master/screenshots/home.JPG)
+![Projects Page](https://github.com/QuintonTracey/personal-website/blob/master/screenshots/projects.JPG)
+![Hobbies Page](https://github.com/QuintonTracey/personal-website/blob/master/screenshots/hobbies.JPG)
