@@ -4,8 +4,6 @@ This is my personal portfolio website, inspired by the retro look and feel of Da
 
 **Live site:** [quintontracey.com](https://quintontracey.com)
 
-
-
 _If screenshots do not appear, add images to a `screenshots/` folder in the repo root with the above filenames._
 
 ## Tech Stack
