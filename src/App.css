@@ -1,5 +1,139 @@
 .App {
   text-align: center;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.home-container {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: #000;
+  background-image: linear-gradient(to right, #111, #000, #073401);
+}
+
+.home-layout {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+
+.figure-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: transform 0.6s ease-in-out;
+}
+
+.figure-container.transitioning {
+  transform: translateX(-100%);
+  transition-delay: 0.2s;
+}
+
+.content-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+.home-avatar-container {
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  min-width: 350px;
+  animation: floating 4s ease-in-out infinite;
+  margin-left: 5%;
+}
+
+.home-avatar-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.7));
+  animation: pulse-glow 6s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes pulse-glow {
+  0% {
+    filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.7));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(163, 230, 0, 0.5));
+  }
+  100% {
+    filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.7));
+  }
+}
+
+/* DDR-style grid background */
+.ddr-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(50, 100, 50, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(50, 100, 50, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  z-index: 1;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 1200px) {
+  .figure-container {
+    width: 25%;
+  }
+  
+  .home-avatar-container {
+    width: 100%;
+    min-width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-layout {
+    flex-direction: column;
+  }
+  
+  .figure-container {
+    width: 100%;
+    height: 30%;
+    position: absolute;
+    top: 60px;
+    left: 0;
+  }
+  
+  .home-avatar-container {
+    width: 180px;
+    min-width: 180px;
+    margin-left: 5%;
+  }
+  
+  .content-container {
+    width: 100%;
+  }
 }
 
 .App-logo {
@@ -35,4 +169,176 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Home page styles */
+.home-container {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.home-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.home-header h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.home-header p {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.home-intro, .home-skills, .home-cta {
+  margin-bottom: 4rem;
+}
+
+.home-intro h2, .home-skills h2, .home-cta h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.skill-item {
+  background-color: #f0f0f0;
+  padding: 0.75rem 1.5rem;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.home-cta {
+  text-align: center;
+}
+
+.cta-button {
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+  background-color: #0052a3;
+}
+
+/* Retro neon custom scrollbars for different page themes */
+.glow-container.green-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #43e543 #111;
+}
+.glow-container.green-scroll::-webkit-scrollbar {
+  width: 12px;
+  background: #111;
+}
+.glow-container.green-scroll::-webkit-scrollbar-thumb {
+  background: #43e543;
+  border-radius: 8px;
+  border: 2px solid #111;
+  box-shadow: 0 0 8px 2px #43e54399;
+}
+.glow-container.green-scroll::-webkit-scrollbar-thumb:hover {
+  background: #76ff76;
+}
+.glow-container.green-scroll::-webkit-scrollbar-corner {
+  background: #111;
+}
+
+.glow-container.blue-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #43a3ff #111;
+}
+.glow-container.blue-scroll::-webkit-scrollbar {
+  width: 12px;
+  background: #111;
+}
+.glow-container.blue-scroll::-webkit-scrollbar-thumb {
+  background: #43a3ff;
+  border-radius: 8px;
+  border: 2px solid #111;
+  box-shadow: 0 0 8px 2px #43a3ff99;
+}
+.glow-container.blue-scroll::-webkit-scrollbar-thumb:hover {
+  background: #7fd0ff;
+}
+.glow-container.blue-scroll::-webkit-scrollbar-corner {
+  background: #111;
+}
+
+.glow-container.purple-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #b266ff #111;
+}
+.glow-container.purple-scroll::-webkit-scrollbar {
+  width: 12px;
+  background: #111;
+}
+.glow-container.purple-scroll::-webkit-scrollbar-thumb {
+  background: #b266ff;
+  border-radius: 8px;
+  border: 2px solid #111;
+  box-shadow: 0 0 8px 2px #b266ff99;
+}
+.glow-container.purple-scroll::-webkit-scrollbar-thumb:hover {
+  background: #e0b3ff;
+}
+.glow-container.purple-scroll::-webkit-scrollbar-corner {
+  background: #111;
+}
+
+.glow-container.red-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #FF5252 #111;
+}
+.glow-container.red-scroll::-webkit-scrollbar {
+  width: 12px;
+  background: #111;
+}
+.glow-container.red-scroll::-webkit-scrollbar-thumb {
+  background: #FF5252;
+  border-radius: 8px;
+  border: 2px solid #111;
+  box-shadow: 0 0 8px 2px #FF525299;
+}
+.glow-container.red-scroll::-webkit-scrollbar-thumb:hover {
+  background: #ff8a8a;
+}
+.glow-container.red-scroll::-webkit-scrollbar-corner {
+  background: #111;
+}
+
+.glow-container.yellow-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #FFEB3B #111;
+}
+.glow-container.yellow-scroll::-webkit-scrollbar {
+  width: 12px;
+  background: #111;
+}
+.glow-container.yellow-scroll::-webkit-scrollbar-thumb {
+  background: #FFEB3B;
+  border-radius: 8px;
+  border: 2px solid #111;
+  box-shadow: 0 0 8px 2px #FFEB3B99;
+}
+.glow-container.yellow-scroll::-webkit-scrollbar-thumb:hover {
+  background: #fff176;
+}
+.glow-container.yellow-scroll::-webkit-scrollbar-corner {
+  background: #111;
 }

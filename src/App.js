@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import './App.css';
+import './index.css'; // Ensure Tailwind is loaded
 
 function App() {
   return (
