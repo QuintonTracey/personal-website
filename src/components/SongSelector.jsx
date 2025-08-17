@@ -403,7 +403,6 @@ const SongSelector = () => {
       </div>
 
       <div className="carousel-container">
-        <div className="selection-marker" style={{clipPath: 'polygon(90px 0, 100vw 0, 100vw 100%, 0 100%)'}}></div>
         <div
           className="carousel-viewport"
           ref={itemsRef}

@@ -84,6 +84,15 @@ code {
   .avatar-image { width: 12rem; height: 12rem; }
 }
 
+/* Ensure avatar is vertically centered on the left for non-mobile screens */
+@media (min-width: 901px) {
+  .avatar-section {
+    left: 6vw;
+    top: 60%;
+    transform: translateY(-50%);
+  }
+}
+
 @media (max-width: 640px) {
   /* Place avatar just above the hex selector; keep margins */
   .avatar-section {

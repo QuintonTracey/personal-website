@@ -164,23 +164,7 @@
 }
 
 /* Selection marker shape matches carousel items */
-.selection-marker {
-  position: absolute;
-  left: 20px;
-  right: 20px;
-  height: 94px; /* Slightly larger than item height */
-  top: 50%; /* Center in the container */
-  transform: translateY(-50%);
-  background-color: rgba(255, 255, 255, 0.07);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 0;
-  z-index: 21;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-  pointer-events: none;
-  /* Match trapezoid shape of items with 45 degree angle */
-  clip-path: polygon(90px 0, 100% 0, 100% 100%, 0 100%);
-  animation: markerPulse 2s infinite ease-in-out;
-}
+/* selection-marker removed on large screens; arrow indicator denotes selection */
 
 /* Mobile pie selector styles */
 .pie-container {
@@ -414,6 +398,24 @@ body {
   
   .carousel-item:not(.selected):hover {
     clip-path: polygon(85px 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+/* Stretch selector fully to viewport edges on non-mobile */
+@media (min-width: 901px) {
+  .carousel-container {
+    width: 100vw;
+    right: 0;
+  }
+  .selection-marker {
+    left: 0;
+    right: 0;
+    clip-path: polygon(80px 0, 100% 0, 100% 100%, 0 100%);
+  }
+  .carousel-item {
+    left: 0;
+    width: 100vw;
+    clip-path: polygon(90px 0, 100% 0, 100% 100%, 0 100%);
   }
 }
 
